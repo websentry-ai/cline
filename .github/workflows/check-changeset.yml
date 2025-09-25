@@ -25,18 +25,22 @@ jobs:
 
             - name: Check for changeset
               id: check-changeset
+              env:
+                PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+                PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+                PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
               run: |
                   # Debug info
                   echo "Current directory: $(pwd)"
-                  echo "PR Base Ref: ${{ github.event.pull_request.base.ref }}"
-                  echo "PR Head Ref: ${{ github.event.pull_request.head.ref }}"
-                  echo "PR Head SHA: ${{ github.event.pull_request.head.sha }}"
+                  echo "PR Base Ref: $PR_BASE_REF"
+                  echo "PR Head Ref: $PR_HEAD_REF"
+                  echo "PR Head SHA: $PR_HEAD_SHA"
                   echo "Git status:"
                   git status
 
                   # Get list of changed files
-                  git fetch origin ${{ github.event.pull_request.base.ref }}
-                  CHANGED_FILES=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }} HEAD)
+                  git fetch origin $PR_BASE_REF
+                  CHANGED_FILES=$(git diff --name-only origin/$PR_BASE_REF HEAD)
                   echo "Changed files:"
                   echo "$CHANGED_FILES"
 
