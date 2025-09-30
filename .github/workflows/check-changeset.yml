@@ -39,7 +39,7 @@ jobs:
                   git status
 
                   # Get list of changed files
-                  git fetch origin $PR_BASE_REF
+                  git fetch origin "$PR_BASE_REF"
                   CHANGED_FILES=$(git diff --name-only origin/$PR_BASE_REF HEAD)
                   echo "Changed files:"
                   echo "$CHANGED_FILES"
